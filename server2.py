@@ -7,6 +7,7 @@ import string
 HOST = 'localhost' 
 SOCKET_LIST = []
 NAME_LIST = []
+send_list = []
 RECV_BUFFER = 4096 
 PORT = 1
 
@@ -94,7 +95,43 @@ def chat_server():
 										temp2+=temp1[x]
 							send_msg(sock, str(temp1[1]),temp2+"\n")
 							'''
+						elif temp1[0]=="multi" :
+							logged = 0
+							user = ""
+							for x in range (len(NAME_LIST)):
+								if NAME_LIST[x]==sock:
+									logged=1
+									user=NAME_LIST[x+1]
+							
+							if logged==0:
+								send_msg(sock, "Please login first\n")
+							
+							else:
+								temp2=""
 								
+								for x in range (len(temp1)):
+									if x>=1:
+										if temp1[x]=="|":
+											y=x
+											break
+										else:
+											temp2=""
+											temp2+=str(temp1[x])
+											for z in range (len(NAME_LIST)):
+												if temp2==NAME_LIST[z]:
+													send_list.append(NAME_LIST[z-1])
+								
+								temp2=""								
+								for x in range (len(temp1)):
+									
+									if x>y:
+										temp2+=" "
+										temp2+=str(temp1[x])
+								pesan="["+user+"] : "+temp2+"\n"
+								for i in range (len(send_list)):
+									send_list[i].send(pesan)
+								del send_list[:]
+		
 						elif temp1[0]=="sendall" :
 							
 							logged = 0
