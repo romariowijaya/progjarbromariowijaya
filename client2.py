@@ -65,6 +65,11 @@ def chat_client():
 						print('Invalid Send Command')
 					else:
 						s.send(temp)
+				elif temp1[0]=="multi" :
+					if d<3:
+						print('Invalid Send Command')
+					else:
+						s.send(temp)
 						
 				elif temp1[0]=="sendall" :
 					if d<2:
